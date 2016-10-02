@@ -7,7 +7,7 @@
 set $mod Mod4
 
 # Command for your terminal emulator
-set $terminalCmd lxterminal
+set $terminalCmd termite
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -54,8 +54,9 @@ workspace_auto_back_and_forth yes
 # & Mouse_3+$mod to resize them
 floating_modifier $mod
 
-# start a terminal
+# start applications
 bindsym $mod+Return exec $terminalCmd
+bindsym $mod+p exec pcmanfm
 
 # kill focused window
 bindsym $mod+Control+q kill
@@ -193,8 +194,8 @@ bindsym $mod+Control+Up resize shrink height 5 px or 5 ppt
 bindsym $mod+Control+Right resize grow width 5 px or 5 ppt
 
 # Jumping to windows
-bindsym $mod+t [class="Lxterminal"] focus
-bindsym $mod+f [class="Firefox"] focus
+bindsym $mod+f exec /home/gabriele/Scripts/i3-runorraise firefox Firefox
+bindsym $mod+t exec /home/gabriele/Scripts/i3-runorraise telegram-desktop telegram-desktop
 
 # Screenshot
 set screenshotCmd /home/gabriele/Scripts/screenshot
