@@ -194,8 +194,7 @@ bindsym $mod+Control+Up resize shrink height 5 px or 5 ppt
 bindsym $mod+Control+Right resize grow width 5 px or 5 ppt
 
 # Jumping to windows
-bindsym $mod+f exec /home/gabriele/Scripts/i3-runorraise firefox Firefox
-bindsym $mod+t exec /home/gabriele/Scripts/i3-runorraise telegram-desktop telegram-desktop
+bindsym $mod+f exec --no-startup-id /home/gabriele/Scripts/i3-runorraise firefox Firefox
 
 # Screenshot
 set screenshotCmd /home/gabriele/Scripts/screenshot

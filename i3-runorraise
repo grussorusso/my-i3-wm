@@ -2,10 +2,4 @@
 
 cmd="$1"
 class="$2"
-
-count=`ps aux | grep -c ${cmd} | wc -l`
-if [ $count -lt 2 ]; then
-    $cmd;
-else
-    i3-msg "[class=${class}] focus"
-fi
+pgrep "$cmd" && i3-msg "[class=${class}] focus" || $cmd
