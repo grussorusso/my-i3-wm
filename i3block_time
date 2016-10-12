@@ -1,0 +1,8 @@
+#!/bin/sh
+
+text=`[[ "$BLOCK_BUTTON" != "" ]] && date '+%a %d/%m %H:%M' || date '+%H:%M'`
+
+fulltext="<span font-weight='bold'>$text</span>"
+
+echo $fulltext
+echo $fulltext

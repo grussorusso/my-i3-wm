@@ -22,6 +22,7 @@ my $percent;
 my $full_text;
 my $short_text;
 my $bat_number = $ENV{BLOCK_INSTANCE} || 0;
+my $symbol;
 
 # read the first line of the "acpi" command output
 open (ACPI, "acpi -b | grep 'Battery $bat_number' |") or die;
@@ -35,13 +36,29 @@ if ($acpi !~ /: (\w+), (\d+)%/) {
 
 $status = $1;
 $percent = $2;
-$full_text = "$percent%";
 
+# Prepend symbol depending on status and percentage
+if ($status eq 'Discharging') {
+	if ($percent < 25) {
+		$symbol = '&#xf215;';
+	} elsif ($percent < 80) {
+		$symbol = '&#xf214;';
+	} else {
+		$symbol = '&#xf213;';
+	}
+} else {
+	$symbol = '&#xf211;';
+}
+
+$full_text = "$symbol  $percent%";
 $short_text = $full_text;
 
-if ($acpi =~ /(\d\d:\d\d):/) {
-	$full_text .= " ($1)";
-}
+# Show estimated charging/discharging time in case of click
+if ($ENV{BLOCK_BUTTON} eq '1') {
+	if ($acpi =~ /(\d\d:\d\d):/) {
+		$full_text .= " ($1)";
+	}
+} 
 
 # print text
 print "$full_text\n";
@@ -54,12 +71,7 @@ if ($status eq 'Discharging') {
 		print "#FF0000\n";
 	} elsif ($percent < 40) {
 		print "#FFAE00\n";
-	} elsif ($percent < 60) {
-		print "#FFF600\n";
-	} elsif ($percent < 85) {
-		print "#A8FF00\n";
 	}
-
 	if ($percent < 5) {
 		exit(33);
 	}

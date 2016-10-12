@@ -1,0 +1,18 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use utf8;
+
+my $percentage;
+
+# read the first line of the "xbacklight" command output
+open (XBACKLIGHT, "xbacklight -get |") or die "error";
+$percentage = <XBACKLIGHT>;
+close(XBACKLIGHT);
+
+# Print short_text, full_text
+printf "%.0f%%\n", $percentage;
+printf "%.0f%%\n", $percentage;
+
+exit(0);

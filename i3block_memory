@@ -45,6 +45,6 @@ if [[ $perc -gt 50 ]]; then
 elif [[ $perc -gt 75 ]]; then
 	echo "#FF0000"
 else
-	echo "#B3E8AE"
+	echo "#FFFFFF"
 fi
 
