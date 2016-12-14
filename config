@@ -21,13 +21,14 @@ font pango:Droid Sans Mono Bold, Icons 13
 
 # Border style
 # Using 'pixel' (instead of normal) removes titlebar too
-new_window pixel 5
-new_float normal 4
-hide_edge_borders both
+new_window pixel 6
+new_float normal 5
+# hide_edge_borders none|vertical|horizontal|both|smart
+hide_edge_borders smart
 
 # Colors
 # class                 border  backgr. text    indicator child_border
-client.focused          #0279D4 #3A9DE8 #ffffff #2e9ef4   #3A9DE8
+client.focused          #0279D4 #f4df42 #000000 #2e9ef4   #f4df42
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #666666
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
