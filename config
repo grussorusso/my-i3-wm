@@ -59,7 +59,8 @@ bindsym $mod+Control+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+m exec --no-startup-id rofi -show drun -opacity 90 -terminal termite -width 1620 -lines 30 -sidebar-mode 
+bindsym $mod+m exec --no-startup-id rofi -show drun -opacity 90 -terminal termite -width 1320 -lines 20 -sidebar-mode 
+bindsym $mod+Tab exec --no-startup-id rofi -show window -opacity 90 -width 1320 -lines 20 -sidebar-mode 
 #bindsym $mod+m exec dmenu_run
 #bindsym $mod+m exec --no-startup-id i3-dmenu-desktop
 
