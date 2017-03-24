@@ -50,7 +50,7 @@ floating_modifier $mod
 
 # start applications
 bindsym $mod+Return exec $terminalCmd
-bindsym $mod+p exec pcmanfm
+bindsym $mod+p exec thunar
 
 # kill focused window
 bindsym $mod+Control+q kill
@@ -130,7 +130,7 @@ set $ws10 10:   ws10
 #
 # Assign classes to specific workspaces
 assign [class="^Thunderbird$"] → $ws2
-assign [class="^telegram-desktop$"] → $ws2
+assign [class="^TelegramDesktop$"] → $ws2
 assign [class="^Firefox$"] → $ws3
 
 # Assume you are on workspace "1: www" and switch to "2: IM"
@@ -217,7 +217,7 @@ bindsym $mod+Control+Right resize grow width 5 px or 5 ppt
 bindsym $mod+f exec --no-startup-id $i3ScriptsDir/i3-runorraise firefox Firefox
 
 # Screenshot
-bindsym Print --release exec --no-startup-id $scriptsDir/screenshot
+bindsym Print --release exec --no-startup-id xfce4-screenshooter
 
 # Screen brightness
 bindsym Mod1+Control+Up exec --no-startup-id $i3ScriptsDir/brightnessctl up
