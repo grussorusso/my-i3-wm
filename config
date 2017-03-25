@@ -21,8 +21,8 @@ font pango:Droid Sans Mono Bold, Icons 12
 
 # Border style
 # Using 'pixel' (instead of normal) removes titlebar too
-new_window pixel 6
-new_float normal 2
+new_window pixel 5
+new_float pixel 1
 # hide_edge_borders none|vertical|horizontal|both|smart
 hide_edge_borders smart
 
@@ -40,6 +40,7 @@ client.background       #ffffff
 # Force floating (or other properties) for specific windows
 for_window [class="speed-dreams-2"] floating enable
 for_window [class="MPlayer"] floating enable
+for_window [class="Display"] floating enable
 
 # Focus follows mouse
 focus_follows_mouse no
@@ -50,7 +51,6 @@ floating_modifier $mod
 
 # start applications
 bindsym $mod+Return exec $terminalCmd
-bindsym $mod+p exec thunar
 
 # kill focused window
 bindsym $mod+Control+q kill
@@ -104,15 +104,12 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Control+space floating toggle
-#bindsym $mod+Control+space floating toggle, border normal 5
-
+bindsym $mod+space floating toggle
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+Control+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
-
 # focus the child container
 bindsym $mod+z focus child
 
@@ -213,8 +210,9 @@ bindsym $mod+Control+Down resize grow height 5 px or 5 ppt
 bindsym $mod+Control+Up resize shrink height 5 px or 5 ppt
 bindsym $mod+Control+Right resize grow width 5 px or 5 ppt
 
-# Jumping to windows
+# Jumping to windows (run or raise)
 bindsym $mod+f exec --no-startup-id $i3ScriptsDir/i3-runorraise firefox Firefox
+bindsym $mod+p exec --no-startup-id $i3ScriptsDir/i3-runorraise thunar Thunar
 
 # Screenshot
 bindsym Print --release exec --no-startup-id xfce4-screenshooter
