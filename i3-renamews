@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Requires 'jq'
+
+NUM=$(i3-msg -t get_workspaces   | jq '.[] | select(.focused==true).num')
+
+if [ $NUM != '-1' ]; then
+	i3-input -F "rename workspace to \"$NUM:  %s $NUM\"" \
+		-P 'New name for this workspace: ' \
+		> /dev/null
+else
+	i3-input -F "rename workspace to \"%s\"" \
+		-P 'New name for this workspace: ' \
+		> /dev/null
+fi
