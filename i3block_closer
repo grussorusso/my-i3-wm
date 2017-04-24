@@ -1,0 +1,16 @@
+#!/bin/sh
+id=$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')
+
+if [[ $BLOCK_BUTTON -eq 1 ]]; then
+	i3-msg kill > /dev/null
+fi
+
+if [[ "$id" != "0x0" ]]; then
+	echo "&#xf229;"
+	echo "&#xf229;"
+else
+	echo ""
+	echo ""
+fi
+
+echo "#ff926b"

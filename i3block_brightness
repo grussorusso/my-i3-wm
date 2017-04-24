@@ -11,6 +11,10 @@ open (XBACKLIGHT, "xbacklight -get |") or die "error";
 $percentage = <XBACKLIGHT>;
 close(XBACKLIGHT);
 
+if ($percentage < 1) {
+	exit(0);
+}
+
 # Print short_text, full_text
 printf "%.0f%%\n", $percentage;
 printf "%.0f%%\n", $percentage;

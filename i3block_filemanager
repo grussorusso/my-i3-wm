@@ -1,0 +1,9 @@
+#!/bin/sh
+if [[ $BLOCK_BUTTON -eq 1 ]]; then
+	i3-msg exec thunar > /dev/null
+fi
+
+
+echo "&#xf239;"
+echo "&#xf239;"
+echo "#a5deff"
