@@ -3,27 +3,31 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-# $mod key is "Windows" key
+# $mod key is "Windows Logo" key
 set $mod Mod4
 
 # Command for your terminal emulator
 set $terminalCmd termite
 
-# Directory containing scripts for i3
+# Command for taking screenshots
+set $screenshotCmd xfce4-screenshooter
+
+# Command for screen locker
+set $Locker i3lock-fancy && sleep 1
+
+# Directories containing scripts 
 set $i3ScriptsDir /home/gabriele/configurazioni/i3/scripts
 set $scriptsDir /home/gabriele/Scripts
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-#font pango:monospace 9
-#font pango:DejaVu Sans 12
 font pango:Droid Sans Mono Bold, Icons 12
 
-# Border style
+# Border style for normal and floating windows.
 # Using 'pixel' (instead of normal) removes titlebar too
-new_window pixel 5
+new_window pixel 2
 new_float pixel 1
-# hide_edge_borders none|vertical|horizontal|both|smart
+# Automatically hides borders at edge of the screen
 hide_edge_borders smart
 
 # Colors
@@ -33,7 +37,6 @@ client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #666666
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-
 client.background       #ffffff
 
 
@@ -49,20 +52,17 @@ focus_follows_mouse no
 # & Mouse_3+$mod to resize them
 floating_modifier $mod
 
-# start applications
+# start terminal
 bindsym $mod+Return exec $terminalCmd
+bindsym $mod+Shift+Return exec $terminalCmd --name=floating
 
 # kill focused window
 bindsym $mod+Control+q kill
 
-# start dmenu (a program launcher)
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-bindsym $mod+m exec --no-startup-id rofi -show drun -opacity 90 -terminal termite -width 1320 -lines 20 -sidebar-mode 
+# start a program launcher
+bindsym $mod+m exec --no-startup-id rofi -show drun -opacity 90 -terminal termite -width 1320 -lines 20 -sidebar-mode -location 2
+# Shows a list of open windows
 bindsym $mod+Tab exec --no-startup-id rofi -show window -opacity 90 -width 1320 -lines 20 -sidebar-mode 
-#bindsym $mod+m exec dmenu_run
-#bindsym $mod+m exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+h focus left
@@ -75,15 +75,6 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# Disable focus change for clicks on titlebars
-# with the middle mouse button
-bindsym button2 nop
-
-# split in horizontal orientation
-bindsym $mod+bar split h
-# split in vertical orientation
-bindsym $mod+minus split v
-
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
@@ -94,6 +85,14 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# Disable focus change for clicks on titlebars with the middle mouse button
+bindsym button2 nop
+
+# split in horizontal orientation
+bindsym $mod+bar split h
+# split in vertical orientation
+bindsym $mod+minus split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+Shift+f fullscreen toggle
@@ -113,11 +112,13 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+z focus child
 
+# ----------------------------------------------------------------------------
 # Workspaces
-set $ws1 1:  ter 
-set $ws2 2:  msg 
-set $ws3 3:  web
-#
+# ----------------------------------------------------------------------------
+set $ws1 1:  ter_1
+set $ws2 2:  msg_2 
+set $ws3 3:  web_3
+
 # Assign classes to specific workspaces
 assign [class="^Thunderbird$"] → $ws2
 assign [class="^TelegramDesktop$"] → $ws2
@@ -141,6 +142,7 @@ bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 bindsym $mod+0 workspace number 10
 
+# rename current workspace (prompts user for a name)
 bindsym $mod+n exec --no-startup-id $i3ScriptsDir/i3-renamews
 
 # move focused container to workspace
@@ -155,9 +157,6 @@ bindsym $mod+Shift+8 move container to workspace number 8; workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9; workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10; workspace number 10
 
-# Toggle between hide state and show state for the bar
-bindsym $mod+b bar mode toggle
-
 # reload the configuration file
 bindsym $mod+Shift+c reload
 
@@ -167,7 +166,9 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
+# ----------------------------------------------------------------------------
+# Resizing containers (you can use the mouse as well)
+# ----------------------------------------------------------------------------
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -191,10 +192,7 @@ mode "resize" {
 	}
 bindsym $mod+r mode "resize"
 
-# Pressing left will shrink the window’s width.
-# Pressing right will grow the window’s width.
-# Pressing up will shrink the window’s height.
-# Pressing down will grow the window’s height.
+# Alternative resize bindings, without entering resize mode
 bindsym $mod+Control+h resize shrink width 5 px or 5 ppt
 bindsym $mod+Control+k resize grow height 5 px or 5 ppt
 bindsym $mod+Control+j resize shrink height 5 px or 5 ppt
@@ -205,12 +203,14 @@ bindsym $mod+Control+Down resize grow height 5 px or 5 ppt
 bindsym $mod+Control+Up resize shrink height 5 px or 5 ppt
 bindsym $mod+Control+Right resize grow width 5 px or 5 ppt
 
+
+
 # Jumping to windows (run or raise)
 bindsym $mod+f exec --no-startup-id $i3ScriptsDir/i3-runorraise firefox Firefox
 bindsym $mod+p exec --no-startup-id $i3ScriptsDir/i3-runorraise thunar Thunar
 
 # Screenshot
-bindsym Print --release exec --no-startup-id xfce4-screenshooter
+bindsym Print --release exec --no-startup-id $screenshotCmd
 
 # Screen brightness
 bindsym Mod1+Control+Up exec --no-startup-id $i3ScriptsDir/brightnessctl up
@@ -222,12 +222,11 @@ bindsym XF86AudioLowerVolume exec --no-startup-id $scriptsDir/myVolumectl down
 bindsym XF86AudioMute exec --no-startup-id $scriptsDir/myVolumectl toggle
 
 # A mode for shutdown, reboot, lock screen etc...
-set $Locker i3lock -i ~/Immagini/i3lock_bg.png && sleep 1
 set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+p) poweroff
 mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym s exec --no-startup-id systemctl suspend, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+p exec --no-startup-id systemctl poweroff -i, mode "default"  
 
@@ -238,9 +237,12 @@ mode "$mode_system" {
 # Enter this mode with Mod+Pause
 bindsym $mod+Pause mode "$mode_system"
 
+# -----------------------------------------------------------------------------
 # i3bar configuration
+# -----------------------------------------------------------------------------
 bar {
-	font pango:Droid Sans Mono Bold, Icons 13
+	height 30
+	font pango:Droid Sans Bold, Icons 12
 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	position top
 	mode dock     # always visible
@@ -251,24 +253,56 @@ bar {
 	strip_workspace_numbers yes
 
 	colors {
-		background #222222
+		background #000000
 		statusline #ffffff
-		separator #666666
+		separator #222222
 
 		# class	           border  bg      text
-		focused_workspace  #222222 #222222 #ffffff
-		active_workspace   #222222 #222222 #ffffff
-		inactive_workspace #222222 #444444 #aaaaaa
-		urgent_workspace   #222222 #222222 #ff0000
-		binding_mode       #222222 #900000 #ffffff
+		focused_workspace  #000000 #000000 #f4ce42
+		active_workspace   #000000 #000000 #ff00aa
+		inactive_workspace #000000 #000000 #999999
+		urgent_workspace   #000000 #000000 #ff0000
+		binding_mode       #000000 #900000 #ffffff
 	}
 }
 
+# Toggles the bar
+bindsym $mod+b bar mode toggle
 
+
+
+# -----------------------------------------------------------------------------
+# Gaps
+# -----------------------------------------------------------------------------
+gaps inner 9
+gaps outer 0
+smart_gaps on
+
+set $mode_gaps Gaps: k|j|0 (local), Shift + k|j|0 (global)
+bindsym $mod+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym k  gaps inner current plus 2
+        bindsym j gaps inner current minus 2
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+k  gaps inner all plus 2
+        bindsym Shift+j  gaps inner all minus 2
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+# -----------------------------------------------------------------------------
 # Autostart
+# -----------------------------------------------------------------------------
+exec --no-startup-id $scriptsDir/duplicateOnHDMI.sh
 exec --no-startup-id setxkbmap it
 exec --no-startup-id amixer set Master mute
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id compton
 exec --no-startup-id nm-applet
 exec --no-startup-id dropbox-cli start
+exec --no-startup-id redshift-gtk -l 41.745324:13.151364
