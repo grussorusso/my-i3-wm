@@ -1,9 +1,0 @@
-#!/bin/sh
-if [[ $BLOCK_BUTTON -eq 1 ]]; then
-	rofi -show drun -opacity 80 -terminal termite -width 1620 -lines 30 -sidebar-mode -location 2 &
-fi
-
-
-echo "&#xf23f;"
-echo "&#xf23f;"
-echo "#a5ffbc"

@@ -1,9 +1,0 @@
-#!/bin/sh
-if [[ $BLOCK_BUTTON -eq 1 ]]; then
-	i3-msg exec termite > /dev/null
-fi
-
-
-echo "&#xf30a;"
-echo "&#xf30a;"
-echo "#ffccfc"

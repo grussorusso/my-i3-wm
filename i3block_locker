@@ -1,9 +1,0 @@
-#!/bin/sh
-if [[ $BLOCK_BUTTON -eq 1 ]]; then
-	i3-msg exec --no-startup-id i3lock-fancy > /dev/null
-fi
-
-
-echo "&#xf300;"
-echo "&#xf300;"
-echo "#ffd26b"
