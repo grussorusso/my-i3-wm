@@ -13,6 +13,7 @@ the AUR for Arch Linux users (as `i3-gaps-git` ).
 - `rofi`: launcher (and more)
 - `Font Awesome 5`: for icons in the bar
 - `compton`: (optional) for transparency and other effects
+- `stalonetray`: standalone system tray
 - `jq`: required for renaming workspaces at run-time through `i3-renamews` script
 
 A few other external programs are referenced in my config (e.g.,
@@ -27,5 +28,6 @@ Some features may not work out-of-the-box because in the configuration you might
 some commands or paths that are customized for my own machine.
 
 ## Screenshot ##
-![Screenshot](https://user-images.githubusercontent.com/5101523/34906310-727ddf88-f86b-11e7-9c39-c15697712d39.png)
-![Screenshot](https://user-images.githubusercontent.com/5101523/34906311-729843f0-f86b-11e7-987d-314f3e16379a.png)
+![Screenshot](https://user-images.githubusercontent.com/5101523/36354657-0266aade-14d8-11e8-87cc-ea669b574ac8.png)
+![Screenshot](https://user-images.githubusercontent.com/5101523/36354659-0298dc34-14d8-11e8-99a3-42b8819b4abc.png)
+![Screenshot](https://user-images.githubusercontent.com/5101523/36354677-42ec040a-14d8-11e8-960c-a513bdeed63f.png)

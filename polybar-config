@@ -1,20 +1,39 @@
-;=====================================================
-;
-;   To learn more about how to configure Polybar
-;   go to https://github.com/jaagr/polybar
-;
-;   The README contains alot of information
-;
-;=====================================================
-
 [colors]
-background = #ff222222
-background-alt = #444
-foreground = #dfdfdf
-foreground-alt = #777
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
+S_yellow   = #b58900
+S_orange   = #cb4b16
+S_red      = #dc322f
+S_magenta  = #d33682
+S_violet   = #6c71c4
+S_blue     = #268bd2
+S_cyan     = #2aa198
+S_green    = #859900
+
+; Dark Solarized
+S_base03 = #002b36
+S_base02 = #073642
+S_base01 = #586e75
+S_base00 = #657b83
+S_base0  = #839496
+S_base1  = #93a1a1
+S_base2  = #eee8d5
+S_base3  = #fdf6e3
+
+; Light Solarized
+;S_base03 = #fdf6e3
+;S_base02 = #eee8d5
+;S_base01 = #93a1a1
+;S_base00 = #839496
+;S_base0  = #657b83
+;S_base1  = #586e75
+;S_base2  = #073642
+;S_base3  = #002b36
+
+background = ${colors.S_base03}
+background-alt = ${colors.S_base01}
+foreground = ${colors.S_base0}
+foreground-alt = ${colors.S_base1}
+light = ${colors.S_base01}
+alert = ${colors.S_red}
 
 [bar/gab]
 enable-ipc = true
@@ -22,7 +41,7 @@ enable-ipc = true
 offset-x = 0
 offset-y = 0
 width = 100%
-height = 27
+height = 34
 radius-top = 0.0
 radius-bottom = 0.0
 
@@ -33,29 +52,30 @@ line-size = 3
 line-color = #f00
 
 border-size = 0
-border-bottom-size = 1
-border-color = #ff000000
+;border-bottom-size = 2
+border-color = #00000000
 
 padding-left = 0
 padding-right = 2
 
-module-margin-left = 1
-module-margin-right = 2
+module-margin-left = 3
+module-margin-right = 3
 
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=true;0
+font-0 = fixed:pixelsize=10;2
+font-1 = unifont:fontformat=truetype:size=8:antialias=true;1
 font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=10;1"
 font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=10;1"
+font-5 = fixed:pixelsize=10;2
 
-modules-left = launcher i3
+modules-left = i3
 modules-center = date
 fixed-center = true
-modules-right = volume backlight-acpi cpu memory wlan battery launch_htop powermenu
+modules-right =  cpu volume backlight-acpi wlan battery launch_htop launcher powermenu
 
-tray-position = right
+tray-position =
 tray-padding = 2
-tray-transparent = false
+tray-transparent = true
 tray-background = ${root.background}
 tray-maxsize = 20
 
@@ -76,19 +96,21 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 
-label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
+label-mode-padding = 5
+label-mode-foreground = ${colors.foreground-alt}
+label-mode-background = ${colors.background-alt}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index% %name%
-label-focused-background =${colors.background-alt}  
-label-focused-underline = ${colors.primary}
-label-focused-padding = 2
+label-focused-background = ${colors.background}
+label-focused-foreground = #ccffad
+label-focused-underline =
+label-focused-padding = 3
+label-focused-font = 6
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index% %name%
-label-unfocused-padding = 2
+label-unfocused-padding = 3
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %index% %name%
@@ -98,26 +120,27 @@ label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
 label-urgent = %index% %name%
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
+label-urgent-background = #ccffad
+label-urgent-foreground = ${colors.background-alt}
+label-urgent-padding = 3
 
 [module/xbacklight]
 type = internal/xbacklight
 
 format = <label> <bar>
 label = ""
-label-foreground = ${colors.foreground-alt}
+label-foreground = ${colors.foreground}
 
 bar-width = 7
 bar-indicator = |
-bar-indicator-foreground = #ff
+bar-indicator-foreground = ${colors.foreground-alt}
 bar-indicator-font = 2
 bar-fill = ─
 bar-fill-font = 2
-bar-fill-foreground = #7bd5e5
+bar-fill-foreground = ${colors.foreground-alt}
 bar-empty = ─
 bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
+bar-empty-foreground = ${colors.foreground}
 
 [module/backlight-acpi]
 inherit = module/xbacklight
@@ -128,20 +151,28 @@ enable-scroll = true
 [module/cpu]
 type = internal/cpu
 interval = 3
-format = <bar-load>
-bar-load-indicator =
-bar-load-width = 6
-bar-load-foreground-0 = #55aa55
-bar-load-foreground-1 = #caff99
-bar-load-foreground-2 = #caff99
-bar-load-foreground-3 = #f5a70a
-bar-load-foreground-4 = #ff5555
-bar-load-fill = ▐
-bar-load-empty = ▐
-bar-load-empty-foreground = #444444
+;format = <label> <ramp-coreload>
+format = <ramp-coreload>
+label = "cpu "
+format-alt = "cii"
+label-alt = "cii"
+label-foreground = ${colors.foreground}
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+ramp-coreload-foreground = ${colors.light}
+ramp-coreload-0-foreground = ${colors.background}
+ramp-coreload-5-foreground = ${colors.foreground-alt}
+ramp-coreload-6-foreground = ${colors.foreground-alt}
+ramp-coreload-7-foreground = ${colors.foreground-alt}
 
-format-prefix = "  "
-format-prefix-foreground = ${colors.foreground-alt}
+;format-prefix = "  "
+format-prefix-foreground = ${colors.foreground}
 ;format-underline = #fe5000
 ;label = %percentage%%
 
@@ -149,21 +180,22 @@ format-prefix-foreground = ${colors.foreground-alt}
 type = internal/memory
 interval = 3
 format = <bar-used>
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+;format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
 ;format-underline = #4bffdc
 ;label = %percentage_used%%
 
 bar-used-indicator =
 bar-used-width = 6
-bar-used-foreground-0 = #55aa55
-bar-used-foreground-1 = #55aa55
-bar-used-foreground-2 = #caff99
-bar-used-foreground-3 = #f5a70a
-bar-used-foreground-4 = #ff5555
+bar-used-foreground = ${colors.foreground-alt}
+;bar-used-foreground-0 = #55aa55
+;bar-used-foreground-1 = #55aa55
+;bar-used-foreground-2 = #caff99
+;bar-used-foreground-3 = #f5a70a
+;bar-used-foreground-4 = #ff5555
 bar-used-fill = ▐
 bar-used-empty = ▐
-bar-used-empty-foreground = #444444
+bar-used-empty-foreground = ${colors.light}
 
 [module/wlan]
 type = internal/network
@@ -171,8 +203,8 @@ format-prefix = ""
 interface = wlp5s0f0
 interval = 5.0
 
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
+format-connected = <label-connected> 
+format-connected-underline =
 label-connected = %essid%
 
 format-disconnected = 
@@ -181,64 +213,39 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+format-connected-foreground = ${colors.foreground-alt}
 
-[module/eth]
-type = internal/network
-interface = enp6s0
-interval = 10.0
-
-format-connected-underline = #55aa55
-format-connected-prefix = "ETH: "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %Y-%m-%d"
+date = ""
+date-alt = "  %A %d %b   "
 
-time = %H:%M
-time-alt = %H:%M
+time = "  %H:%M"
+time-alt = "  %H:%M"
 
 format-prefix =
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = 
 
-label = %date% %time%
+label = %date%  %time%
 
 [module/volume]
 type = internal/volume
 
 format-volume = <label-volume> <bar-volume>
 label-volume = " "
-label-volume-foreground = ${colors.foreground-alt}
+label-volume-foreground = ${colors.foreground}
 
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
-label-muted = (sound muted)
+format-muted = <label-muted>
+;format-muted-prefix = " "
+label-muted-foreground = ${colors.light}
+label-muted = " "
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #4286f4
-bar-volume-foreground-1 = #4286f4
-bar-volume-foreground-2 = #4286f4
-bar-volume-foreground-3 = #4286f4
-bar-volume-foreground-4 = #4286f4
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
+bar-volume-width = 8
+bar-volume-foreground = ${colors.foreground-alt}
 bar-volume-gradient = false
 bar-volume-indicator = |
 bar-volume-indicator-font = 2
@@ -246,7 +253,7 @@ bar-volume-fill = ─
 bar-volume-fill-font = 2
 bar-volume-empty = ─
 bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+bar-volume-empty-foreground = ${colors.foreground}
 
 [module/battery]
 type = internal/battery
@@ -261,7 +268,7 @@ format-discharging = <ramp-capacity> <label-discharging>
 ;format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-prefix-foreground = ${colors.foreground}
 ;format-full-underline = ${self.format-charging-underline}
 
 ramp-capacity-0 = 
@@ -279,16 +286,16 @@ animation-charging-framerate = 750
 type = custom/text
 content = ""
 click-left = "rofi -show drun -opacity 90 -terminal termite -width 1320 -lines 20 -sidebar-mode -location 1"
-content-foreground = #ffffff
-content-padding = 2
-content-underline = #ffffff
+content-foreground = ${colors.foreground}
+content-padding = 0
+;content-underline = #ffffff
 content-offset = 5
 
 [module/launch_htop]
 type = custom/text
 content = ""
-click-left = "termite -e htop --name floating"
-content-padding = 1
+click-left = "termite -e htop --name floating --geometry 1400x900"
+content-padding = 0
 
 [module/powermenu]
 type = custom/menu
@@ -298,7 +305,7 @@ format-spacing = 0
 
 label-open = " "
 label-close = "cancel"
-label-close-foreground = ${colors.secondary}
+label-close-foreground = ${colors.foreground-alt}
 label-separator = " / "
 label-separator-foreground = ${colors.foreground-alt}
 
@@ -327,7 +334,7 @@ screenchange-reload = true
 ;compositing-border = over
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-top = 2
+margin-bottom = 2
 
 ; vim:ft=dosini

@@ -1,26 +1,19 @@
-# i3 config file (v4)
-# Customized by Gabriele Russo Russo <gabri.russo17@gmail.com>
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-
 # $mod key is "Windows Logo" key
 set $mod Mod4
 
-# Command for your terminal emulator
 set $terminalCmd termite
-
-# Command for file manager
 set $fileManager pcmanfm
-
-# Command for taking screenshots
 set $screenshotCmd xfce4-screenshooter
-
-# Command for screen locker
 set $Locker i3lock-fancy && sleep 1
+set $launcherCmd rofi -show drun -opacity 90 -terminal termite -width 1320 -lines 20 -sidebar-mode -location 2 -theme "solarized_alternate"
 
 # Directories containing scripts 
 set $i3ScriptsDir /home/gabriele/configurazioni/i3/scripts
 set $scriptsDir /home/gabriele/Scripts
+
+set $borderSize 4
+set $largerBorderSize 6
+set $floatBorderSize 2
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -28,18 +21,27 @@ font pango:Droid Sans Mono Bold, Icons 12
 
 # Border style for normal and floating windows.
 # Using 'pixel' (instead of normal) removes titlebar too
-new_window pixel 4
-new_float pixel 2
+new_window pixel $borderSize
+new_float pixel $floatBorderSize
 # Automatically hides borders at edge of the screen
 hide_edge_borders smart
 
 # Colors
+#
+set $color0 "#065063"
+set $color1 "#839496"
+set $bg_urgent "#dc322f"
+set $indic "#859900"
+set $bg_inactive "#002b36"
+set $fg_inactive "#888888"
+set $bg_focus "#065063"
+
 # class                 border  backgr. text    indicator child_border
-client.focused          #d8a006 #f4df42 #000000 #2e9ef4   #f4df42
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #333333 #222222 #888888 #292d2e   #666666
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.focused          $bg_focus $bg_focus $color1 $indic   $bg_focus
+client.focused_inactive $bg_inactive $bg_inactive $fg_inactive $bg_inactive $bg_inactive
+client.unfocused	$bg_inactive $bg_inactive $fg_inactive $bg_inactive $bg_inactive
+client.urgent           $bg_urgent $bg_urgent #ffffff $indic   $bg_urgent
+#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 
@@ -51,6 +53,12 @@ for_window [class="gnuplot_qt"] floating enable
 for_window [instance="floating"] floating enable
 for_window [instance="Msgcompose"] floating enable
 
+#for_window [class="Termite"] border normal $borderSize
+#for_window [class="MuPDF"] border normal $borderSize
+for_window [class="Termite"] border pixel $largerBorderSize
+
+for_window [title="stalonetray"] move scratchpad
+
 # Focus follows mouse
 focus_follows_mouse no
 
@@ -60,13 +68,13 @@ floating_modifier $mod
 
 # start terminal
 bindsym $mod+Return exec $terminalCmd
-bindsym $mod+Shift+Return exec $terminalCmd --name=floating
+bindsym $mod+Shift+Return exec $terminalCmd --name=floating --geometry=1200x800
 
 # kill focused window
 bindsym $mod+Control+q kill
 
 # start a program launcher
-bindsym $mod+m exec --no-startup-id rofi -show drun -opacity 90 -terminal termite -width 1320 -lines 20 -sidebar-mode -location 2
+bindsym $mod+m exec --no-startup-id $launcherCmd
 # Shows a list of open windows
 bindsym $mod+Tab exec --no-startup-id rofi -show window -opacity 90 -width 1320 -lines 20 -sidebar-mode 
 
@@ -225,6 +233,9 @@ bindsym Print --release exec --no-startup-id $screenshotCmd
 # File manager
 bindsym $mod+p exec $fileManager
 
+# Toggles stalonetray window (for the system tray icons)
+bindsym $mod+t exec --no-startup-id $scriptsDir/toggleStalonetray
+
 # Screen brightness
 bindsym Mod1+Control+Up exec --no-startup-id $i3ScriptsDir/brightnessctl up
 bindsym Mod1+Control+Down exec --no-startup-id $i3ScriptsDir/brightnessctl down
@@ -253,9 +264,9 @@ bindsym $mod+Pause mode "$mode_system"
 # -----------------------------------------------------------------------------
 # Gaps
 # -----------------------------------------------------------------------------
-gaps inner 6
-gaps outer 0
-smart_gaps on
+gaps inner 10
+gaps outer 3
+#smart_gaps on
 
 set $mode_gaps Gaps: k|j|0 (local), Shift + k|j|0 (global)
 bindsym $mod+g mode "$mode_gaps"
@@ -263,7 +274,7 @@ bindsym $mod+g mode "$mode_gaps"
 mode "$mode_gaps" {
         bindsym k  gaps inner current plus 2
         bindsym j gaps inner current minus 2
-        bindsym 0     gaps inner current set 0
+        bindsym 0     gaps inner current set 0; mode "default"
 
         bindsym Shift+k  gaps inner all plus 2
         bindsym Shift+j  gaps inner all minus 2
@@ -286,3 +297,5 @@ exec --no-startup-id nm-applet
 exec --no-startup-id dropbox-cli start
 exec --no-startup-id redshift -l 41.745324:13.151364
 exec_always --no-startup-id $HOME/configurazioni/i3/launch-polybar.sh
+exec --no-startup-id $scriptsDir/launchCompositor.sh
+exec --no-startup-id $scriptsDir/launchStalonetray
